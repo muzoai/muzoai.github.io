@@ -8,6 +8,8 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
+		pages: 'build',
+		assets: 'build',
 		adapter: adapter({
 			fallback: '404.html'
 		}),
