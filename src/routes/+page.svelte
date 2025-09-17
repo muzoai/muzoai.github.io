@@ -166,12 +166,14 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		align-items: center;
 		height: 100%;
 		width: 100%;
 	}
 
 	.song-list-container {
 		overflow: scroll;
+		width: 100%;
 	}
 
 	.input-area {

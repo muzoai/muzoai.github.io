@@ -24,6 +24,7 @@
 		padding: 15px;
 		border-radius: 10px;
 		margin-bottom: 25px;
+		max-width: 500px;
 		margin-left: 25px;
 		margin-right: 25px;
 	}
