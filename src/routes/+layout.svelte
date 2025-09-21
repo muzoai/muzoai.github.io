@@ -9,10 +9,7 @@
 
 	onMount(() => {
 		$effect(() => {
-			const container = document.getElementById('container');
-			if (container) {
-				container.classList = `container theme-${getSettings().theme}`;
-			}
+			document.getElementsByTagName('html')[0].classList = `theme-${getSettings().theme}`;
 		});
 	});
 </script>
@@ -21,25 +18,27 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<div id="container">
-	<div id="inner-container">
-		{@render children?.()}
-	</div>
+<div id="inner-container">
+	{@render children?.()}
 </div>
 
-<style>
-	:global {
-		.container {
-			width: 100%;
-			height: 1000px;
-		}
-	}
+<div id="bottom-fade"></div>
 
+<style>
 	#inner-container {
-		width: 100%;
-		height: 100%;
 		background-color: var(--bg-prim);
 		color: var(--text-prim);
+	}
+
+	#bottom-fade {
+		position: fixed;
+		background: linear-gradient(transparent, var(--bg-sec));
+		opacity: 0.5;
+		z-index: 1000;
+		bottom: 0px;
+		left: 0px;
+		width: 100%;
+		height: 140px;
 	}
 
 	:root {
@@ -148,6 +147,14 @@
 
 		button:hover {
 			color: var(--hover);
+		}
+
+		button:hover > svg {
+			transform: scale(1.2);
+		}
+
+		button > svg {
+			transition: transform ease-in-out 0.1s;
 		}
 
 		textarea,

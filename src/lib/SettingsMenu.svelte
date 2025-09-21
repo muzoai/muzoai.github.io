@@ -12,6 +12,7 @@
 </script>
 
 <div class="container">
+	<h2>Theme</h2>
 	<select bind:value={theme}>
 		{#each Object.values(Theme) as theme}
 			<option value={theme}>{theme}</option>

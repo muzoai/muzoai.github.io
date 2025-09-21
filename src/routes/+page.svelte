@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { elemHoverSound, playDone, playSubmit } from '$lib';
+	import Burst from '$lib/Burst.svelte';
 	import Error from '$lib/Error.svelte';
 	import SettingsMenu from '$lib/SettingsMenu.svelte';
 	import { callModel, Song } from '$lib/song.svelte';
 	import SongList from '$lib/SongList.svelte';
-	import { IconSend, IconSettings } from '@tabler/icons-svelte';
+	import { IconReload, IconSend, IconSettings } from '@tabler/icons-svelte';
 	import { onMount } from 'svelte';
 
 	let prompt = $state('');
@@ -45,21 +46,27 @@
 		window.setTimeout(() => {
 			document.getElementById(song.id)!.style = 'transition: filter ease-out 1s; filter: none;';
 		}, 10);
+
+		localStorage.setItem('songs', JSON.stringify(songs));
 	}
 
 	onMount(() => {
-		const stored = JSON.parse(localStorage.getItem('songs') ?? 'null');
+		try {
+			const stored = JSON.parse(localStorage.getItem('songs') ?? 'null');
 
-		if (stored) {
-			songs = stored;
-		}
+			if (stored) {
+				songs = stored.filter((s: Song) => s.url !== undefined);
+			}
+		} catch (_) {}
 
 		$effect(() => {
 			localStorage.setItem('songs', JSON.stringify(songs));
 		});
 	});
 
-	function generate() {
+	let burst = $state(false);
+
+	function generate(prompt: string) {
 		if (prompt.length == 0) return;
 
 		error = undefined;
@@ -74,15 +81,20 @@
 
 		playSubmit();
 
-		callModel(song.prompt)
-			.then((url) => {
-				song.url = url;
-				done(song, true);
-			})
-			.catch((e) => {
-				error = e.toString();
-				done(song, false);
-			});
+		// callModel(song.prompt)
+		// 	.then((url) => {
+		// 		song.url = url;
+		// 		done(song, true);
+		// 	})
+		// 	.catch((e) => {
+		// 		error = e.toString();
+		// 		done(song, false);
+		// 	});
+
+		window.setTimeout(() => {
+			song.url = 'https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3';
+			done(song, true);
+		}, 2000);
 	}
 
 	let showingSettings = $state(false);
@@ -90,7 +102,7 @@
 
 <div class="top-right">
 	<button
-		aria-label="generate"
+		aria-label="settings"
 		use:elemHoverSound
 		onclick={() => (showingSettings = !showingSettings)}
 	>
@@ -105,9 +117,36 @@
 		<div class="input-area">
 			<textarea bind:value={prompt} placeholder="Describe your song..."></textarea>
 
-			<button aria-label="generate" use:elemHoverSound onclick={generate}>
+			<button
+				aria-label="generate"
+				use:elemHoverSound
+				onclick={() => {
+					burst = true;
+					generate(prompt);
+					prompt = "";
+				}}
+			>
 				<IconSend size={32} />
+				{#if burst}
+					<Burst
+						onFinish={() => {
+							burst = false;
+						}}
+					/>
+				{/if}
 			</button>
+
+			{#if lastPrompt !== null}
+				<button
+					aria-label="redo"
+					use:elemHoverSound
+					onclick={() => {
+						generate(lastPrompt!);
+					}}
+				>
+					<IconReload size={32} />
+				</button>
+			{/if}
 		</div>
 
 		{#if error !== undefined}
@@ -167,12 +206,10 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		height: 100%;
-		width: 100%;
+		overflow-x: hidden;
 	}
 
 	.song-list-container {
-		overflow: scroll;
 		width: 100%;
 	}
 

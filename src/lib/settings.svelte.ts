@@ -14,7 +14,7 @@ export enum Theme {
 }
 
 const DEFAULT: Settings = {
-	theme: Theme.Dark,
+	theme: Theme.Nord,
 };
 
 let settings: Settings = $state(DEFAULT);
