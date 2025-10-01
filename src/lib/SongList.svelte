@@ -15,8 +15,8 @@
 </script>
 
 <div class="song-list">
-	{#each sortedSong as song}
-		<div id={song.id} class="song-container">
+	{#each sortedSong as song (song.id)}
+		<div id={song.id} class="song-container areo gloss">
 			{#if song.isGenerating}
 				<Creating />
 			{:else}
@@ -40,7 +40,7 @@
 	.song-list {
 		display: flex;
 		flex-direction: column;
-		gap: 10px;
+		gap: 15px;
 		width: 100%;
 		align-items: center;
 	}
@@ -55,8 +55,8 @@
 		overflow: hidden;
 		transition: height ease-in-out 0.5s;
 		background-color: var(--bg-sec);
-		padding: 10px;
+		padding: 12px;
 		border-radius: 10px;
-		box-shadow: 0px 0px 10px #00000099;
+		box-shadow: 0px 0px 15px var(--shadow);
 	}
 </style>

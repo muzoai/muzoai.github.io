@@ -2,6 +2,7 @@
 	import { elemHoverSound, playDone, playSubmit } from '$lib';
 	import Burst from '$lib/Burst.svelte';
 	import Error from '$lib/Error.svelte';
+	import { getShowingSettings } from '$lib/settings.svelte';
 	import SettingsMenu from '$lib/SettingsMenu.svelte';
 	import { callModel, Song } from '$lib/song.svelte';
 	import SongList from '$lib/SongList.svelte';
@@ -81,36 +82,24 @@
 
 		playSubmit();
 
-		// callModel(song.prompt)
-		// 	.then((url) => {
-		// 		song.url = url;
-		// 		done(song, true);
-		// 	})
-		// 	.catch((e) => {
-		// 		error = e.toString();
-		// 		done(song, false);
-		// 	});
+		callModel(song.prompt)
+			.then((url) => {
+				song.url = url;
+				done(song, true);
+			})
+			.catch((e) => {
+				error = e.toString();
+				done(song, false);
+			});
 
-		window.setTimeout(() => {
-			song.url = 'https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3';
-			done(song, true);
-		}, 2000);
+		// window.setTimeout(() => {
+		// 	song.url = 'https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3';
+		// 	done(song, true);
+		// }, 2000);
 	}
-
-	let showingSettings = $state(false);
 </script>
 
-<div class="top-right">
-	<button
-		aria-label="settings"
-		use:elemHoverSound
-		onclick={() => (showingSettings = !showingSettings)}
-	>
-		<IconSettings size={32} />
-	</button>
-</div>
-
-{#if showingSettings}
+{#if getShowingSettings()}
 	<SettingsMenu />
 {:else}
 	<div id="main">
@@ -125,6 +114,7 @@
 					generate(prompt);
 					prompt = "";
 				}}
+				class="med-gloss"
 			>
 				<IconSend size={32} />
 				{#if burst}
@@ -140,6 +130,7 @@
 				<button
 					aria-label="redo"
 					use:elemHoverSound
+				class="med-gloss"
 					onclick={() => {
 						generate(lastPrompt!);
 					}}
@@ -206,7 +197,6 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		overflow-x: hidden;
 	}
 
 	.song-list-container {
@@ -225,16 +215,5 @@
 	textarea {
 		width: 400px;
 		height: 150px;
-	}
-
-	.top-right {
-		position: fixed;
-		left: 10px;
-		top: 10px;
-		opacity: 50%;
-	}
-
-	.top-right:hover {
-		opacity: 100%;
 	}
 </style>

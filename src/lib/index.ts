@@ -4,7 +4,6 @@ import { browser } from "$app/environment";
 import hoverSound from "$lib/assets/click-buttons-ui-menu-sounds-effects-button-2-203594.mp3";
 import doneSound from "$lib/assets/ui-sounds-pack-2-sound-2-358896.mp3"
 import submitSound from "$lib/assets/ui-sounds-pack-2-sound-4-358895.mp3"
-import starSvg from "$lib/assets/star.svg"
 
 export function elemHoverSound(node: HTMLElement) {
 	const audio = new Audio(hoverSound);

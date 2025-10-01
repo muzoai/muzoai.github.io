@@ -21,9 +21,11 @@
 	let duration = $state(0);
 	let progress = $state(0);
 
-	let audio: HTMLAudioElement;
+	let audio: HTMLAudioElement | undefined;
 
 	const play = () => {
+		if (!audio) return;
+
 		if (!isPlaying(song)) {
 			setPlaying(song);
 			paused = false;
@@ -31,11 +33,11 @@
 			paused = !paused;
 		}
 
-		if (paused) {
-			audio.pause();
-		} else {
-			audio.play();
-		}
+		// if (paused) {
+		// 	audio.pause();
+		// } else {
+		// 	audio.play();
+		// }
 	};
 
 	let isCurrentlyPlaying = $derived(!paused && isPlaying(song));
@@ -43,10 +45,16 @@
 	onMount(() => {
 		audio = new Audio(song.url);
 		audio.addEventListener('loadedmetadata', () => {
+			if (!audio) return;
 			duration = audio.duration;
 		});
 		audio.addEventListener('timeupdate', () => {
+			if (!audio) return;
 			progress = audio.currentTime / audio.duration;
+		});
+		audio.addEventListener('ended', () => {
+			paused = true;
+			console.log("done");
 		});
 		audio.onerror = (e) => {
 			console.log(e);
@@ -54,6 +62,7 @@
 	});
 
 	onDestroy(() => {
+		if (!audio) return;
 		audio.pause();
 	});
 
@@ -68,12 +77,17 @@
 	});
 
 	function seek(p: number) {
-		audio.currentTime = p * audio.duration;
+		if (!audio) return;
+		try {
+			audio.currentTime = p * audio.duration;
+		} catch (e) {
+			console.error(e);
+		}
 	}
 </script>
 
 <div class="container">
-	<button class="play-button" onclick={play} use:elemHoverSound>
+	<button class="play-button med-gloss" onclick={play} use:elemHoverSound>
 		{#if isCurrentlyPlaying}
 			<IconPlayerPauseFilled size={32} />
 		{:else}
@@ -90,19 +104,23 @@
 	</div>
 
 	<div class="options">
-		<button onclick={deleteThis} use:elemHoverSound>
+		<button onclick={deleteThis} use:elemHoverSound class="small-gloss">
 			<IconTrash size={20} />
 		</button>
-		<button onclick={() => {
-          if (!song.url) return;
+		<button
+			class="small-gloss"
+			onclick={() => {
+				if (!song.url) return;
 
-          let a = document.createElement("a");
-          a.href = song.url;
-          a.download = "song.mp3";
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-        }} use:elemHoverSound>
+				let a = document.createElement('a');
+				a.href = song.url;
+				a.download = 'song.mp3';
+				document.body.appendChild(a);
+				a.click();
+				document.body.removeChild(a);
+			}}
+			use:elemHoverSound
+		>
 			<IconDownload size={20} />
 		</button>
 	</div>
@@ -124,6 +142,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		margin: 10px;
 	}
 
 	.name {
@@ -145,5 +164,6 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		gap: 7px;
 	}
 </style>

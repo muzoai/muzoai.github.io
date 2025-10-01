@@ -7,7 +7,7 @@ export interface Settings {
 export enum Theme {
 	Light = 'light',
 	Dark = 'dark',
-	Yesh = 'yesh',
+	Aero = 'aero',
 	Nord = 'nord',
 	Catppuccin = 'catppuccin',
 	Everforest = 'everforest',
@@ -38,3 +38,13 @@ export function setSettings(newSettings: Settings) {
 	}
 };
 
+
+let showingSettings: boolean = $state(false);
+export function getShowingSettings(): boolean {
+	return showingSettings;
+};
+
+export function setShowingSettings(newValue: boolean) {
+	console.log(newValue);
+	showingSettings = newValue;
+};

@@ -28,9 +28,17 @@ export async function callModel(prompt: string): Promise<string> {
 		hasAudioAttchment: false,
 	};
 
-	let res: PromptResponseDto = await (await fetch("https://muzo-nestjs-backend-bdgegsefercmgdb4.australiaeast-01.azurewebsites.net//tracks/createloggedout", {
+	const ORIGIN = "https://muzo-nestjs-backend-bdgegsefercmgdb4.australiaeast-01.azurewebsites.net/";
+	// const ORIGIN = "http://localhost:8080";
+
+	console.log(dto);
+
+	let res: PromptResponseDto = await (await fetch(`${ORIGIN}/tracks/createloggedout`, {
 		method: "POST",
 		body: JSON.stringify(dto),
+        headers: {
+            'Content-Type': 'application/json',
+        },
 	})).json();
 
 	console.log(res);

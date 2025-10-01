@@ -1,6 +1,7 @@
 <script lang="ts">
 	import favicon from '$lib/assets/favicon.svg';
 	import { getSettings } from '$lib/settings.svelte';
+	import TopBar from '$lib/TopBar.svelte';
 	import { onMount } from 'svelte';
 
 	let { children } = $props();
@@ -18,29 +19,11 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<div id="inner-container">
-	{@render children?.()}
-</div>
+<TopBar />
 
-<div id="bottom-fade"></div>
+{@render children?.()}
 
 <style>
-	#inner-container {
-		background-color: var(--bg-prim);
-		color: var(--text-prim);
-	}
-
-	#bottom-fade {
-		position: fixed;
-		background: linear-gradient(transparent, var(--bg-sec));
-		opacity: 0.5;
-		z-index: 1000;
-		bottom: 0px;
-		left: 0px;
-		width: 100%;
-		height: 140px;
-	}
-
 	:root {
 		--bg-prim: #222;
 		--bg-sec: #333;
@@ -51,17 +34,95 @@
 	}
 
 	:global {
-		.theme-yesh {
+		.theme-aero {
 			--col-navbar: transparent;
-			--col-sidebar: #16132a;
-			--col-accent: #22d3ee;
-			--col-altAccent: #3b82f6;
-			--col-accentContrast: #fff;
-			--bg-prim: #120720;
-			--bg-sec: #1e1b3b;
-			--col-subContainer: #2c284e;
-			--text-prim: #fff;
+			--bg-prim: #95b8c9;
+			--bg-sec: #9ceff2;
+			--text-prim: #000;
 			--hover: #22d3ee;
+
+			.gloss {
+				&::before {
+					content: '';
+					position: absolute;
+					top: 4%;
+					left: 0.5em;
+					width: calc(100% - 1em);
+					height: 40%;
+					background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.0));
+					border-radius: inherit;
+					transition: background 400ms;
+				}
+			}
+
+			.small-gloss {
+				&::after {
+					content: '';
+					position: absolute;
+					top: 4%;
+					width: 25px;
+					height: 15px;
+					background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0));
+					border-radius: 9999px;
+					transition: background 400ms;
+				}
+			}
+
+			.med-gloss {
+				&::after {
+					content: '';
+					position: absolute;
+					top: 4%;
+					width: 30px;
+					height: 15px;
+					background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0));
+					border-radius: 9999px;
+					transition: background 400ms;
+				}
+			}
+
+			.areo,
+			button,
+			select {
+				--bottom-glow: radial-gradient(
+					farthest-corner at bottom center,
+					rgba(255, 255, 255, 0.7),
+					transparent
+				);
+				--stripes: repeating-linear-gradient(to bottom, #eee 0px, #eee 2px, #fff 2px, #fff 4px);
+				/* Colors */
+				--hue: 200;
+				--button-background: oklch(75% 0.1 var(--hue) / 0.8);
+				--bg-dark: oklch(45% 0.1 var(--hue) / 0.75);
+				--button-foreground: oklch(15% 0.05 var(--hue));
+				/* Style */
+				background-color: var(--button-background);
+				background:
+					var(--bottom-glow), linear-gradient(to bottom, var(--bg-dark), var(--button-background));
+				box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+				border: 1px solid var(--button-background);
+				border-radius: 999px;
+				cursor: pointer;
+				/* margin: 1em 1ex; */
+				padding: 0.7ex 0.7em;
+				position: relative;
+				text-shadow: 0 2px 0.5em #0003;
+				transition: all 300ms;
+				/* Text */
+				color: var(--button-foreground);
+				font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lunasima', sans-serif;
+				font-weight: 700;
+
+				&:hover,
+				&:focus {
+					box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+					transform: scale(1.1);
+				}
+
+				&:active {
+					box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+				}
+			}
 		}
 
 		.theme-dark {
@@ -78,16 +139,12 @@
 		}
 
 		.theme-light {
-			--col-navbar: #eee;
-			--col-sidebar: #eee;
-			--col-accent: #777;
-			--col-altAccent: #555;
-			--col-accentContrast: #fff;
 			--bg-prim: #fff;
-			--bg-sec: #eee;
-			--col-subContainer: #ccc;
+			--bg-sec: #ddd;
 			--text-prim: #000;
-			--hover: #777;
+			--hover: #239AD7;
+			--accent: #51D6CE;
+			--shadow: #00000033;
 		}
 
 		/* https://catppuccin.com/ */
@@ -143,6 +200,9 @@
 			cursor: pointer;
 			transition: color ease-in-out 0.1s;
 			color: var(--text-prim);
+			display: flex;
+			align-items: center;
+			justify-content: center;
 		}
 
 		button:hover {

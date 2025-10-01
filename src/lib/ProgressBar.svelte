@@ -14,7 +14,7 @@
     seek(p);
 }}>
     <div class="inner" style:width={`${progress * 100}%`}>
-        <div class="head"></div>
+        <div class="head areo"></div>
     </div>
 </div>
 
@@ -24,14 +24,15 @@
     }
 
     .head {
-        height: calc(var(--height) * 2);
-        width: calc(var(--height) * 2);
+        height: calc(var(--height) * 2) !important;
+        width: calc(var(--height) * 2) !important;
+        padding: 0px;
         right: 0px;
-        border-radius: 50%;
+        border-radius: 50% !important;
         background-color: var(--text-prim);
         position: relative;
-        top: -50%;
-        left: calc(100% - var(--height));
+        top: -50% !important;
+        left: calc(100% - var(--height)) !important;
     }
 
     .head:hover {

@@ -60,10 +60,18 @@
 		const canv = document.getElementById('canv')! as HTMLCanvasElement;
 		const ctx = canv.getContext('2d')!;
 
+		let lastT: number | null = null;
+
 		const render = () => {
+			const now = Date.now();
+			let dt = 0;
+			if (lastT !== null) dt = now - lastT;
+			lastT = now;
+
+			dt *= 1.4 / 1000 * 60;
+
 			ctx.clearRect(0, 0, H, W);
 
-			const dt = 1.4;
 
 			for (const star of stars) {
 				star.vy += 0.07 * dt;
@@ -91,16 +99,16 @@
 	});
 </script>
 
+<div>
 <canvas id="canv" height={H} width={W}>
 </canvas>
+</div>
 
 <style>
 	#canv {
 		position: absolute;
 		z-index: 500;
-		transform: translate(calc(-50% - 16px), calc(-50% + 16px));
-		/* left: 50%; */
-		/* top: 50%; */
+		transform: translate(calc(-50% - 18px), calc(-50%));
 		pointer-events: none;
 	}
 </style>
