@@ -104,7 +104,9 @@
 {:else}
 	<div id="main">
 		<div class="input-area">
-			<textarea bind:value={prompt} placeholder="Describe your song..."></textarea>
+			<div class="textarea-container">
+				<textarea bind:value={prompt} placeholder="Describe your song..."></textarea>
+			</div>
 
 			<button
 				aria-label="generate"
@@ -112,7 +114,7 @@
 				onclick={() => {
 					burst = true;
 					generate(prompt);
-					prompt = "";
+					prompt = '';
 				}}
 				class="med-gloss"
 			>
@@ -130,7 +132,7 @@
 				<button
 					aria-label="redo"
 					use:elemHoverSound
-				class="med-gloss"
+					class="med-gloss"
 					onclick={() => {
 						generate(lastPrompt!);
 					}}

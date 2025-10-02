@@ -15,6 +15,10 @@
 	<!-- > -->
 	<!-- 	<IconSettings size={32} /> -->
 	<!-- </button> -->
+
+	<a href="https://white-bay-04ed1ab00.6.azurestaticapps.net/">
+		Use other site
+	</a>
 </div>
 <div class="spacer"></div>
 

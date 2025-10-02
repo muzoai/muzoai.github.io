@@ -246,20 +246,29 @@
 			--accent: #51D6CE;
 			--shadow: #00000045;
 
-			.song-container, textarea {
+			.song-container, .textarea-container {
 				backdrop-filter: blur(15px);
 				background-color: transparent !important;
 				box-shadow: 0px 0px 20px var(--shadow);
-				border-radius: 3px !important;
+				border-radius: 7px !important;
 			}
 
-			.song-container::before {
+			textarea {
+				background-color: transparent !important;
+				position: relative;
+				border-radius: 7px !important;
+				border: none;
+			}
+
+			.song-container::before, .textarea-container::before {
 				content: '';
 				position: absolute;
 				width: 100%;
 				height: 100%;
 				background-color: #ddd6;
 				z-index: 0;
+				pointer-events: none;
+				border-radius: inherit;
 			}
 
 			/* @font-face { */
