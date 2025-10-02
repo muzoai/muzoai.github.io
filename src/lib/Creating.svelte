@@ -70,8 +70,6 @@
 	.container {
 		overflow: hidden;	
 		height: 100px;
-	}
-
-	.notes {
+        z-index: 10;
 	}
 </style>

@@ -135,6 +135,7 @@
 		grid-row-gap: 0px;
 		height: 60px;
 		width: 100%;
+		z-index: 10;
 	}
 
 	.play-button {

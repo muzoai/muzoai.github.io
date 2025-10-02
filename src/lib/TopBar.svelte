@@ -8,13 +8,13 @@
 <div class="container">
 	<img class="logo" src="logo-word-blue.png" alt="logo" />
 
-	<button
-		aria-label="settings"
-		use:elemHoverSound
-		onclick={() => setShowingSettings(!getShowingSettings())}
-	>
-		<IconSettings size={32} />
-	</button>
+	<!-- <button -->
+	<!-- 	aria-label="settings" -->
+	<!-- 	use:elemHoverSound -->
+	<!-- 	onclick={() => setShowingSettings(!getShowingSettings())} -->
+	<!-- > -->
+	<!-- 	<IconSettings size={32} /> -->
+	<!-- </button> -->
 </div>
 <div class="spacer"></div>
 
@@ -39,6 +39,7 @@
 		padding: 10px;
 		margin: 0px;
 		background-color: var(--bg-sec);
+		z-index: 4000;
 	}
 
 	.logo {

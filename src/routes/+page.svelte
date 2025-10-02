@@ -210,6 +210,7 @@
 		flex-wrap: wrap;
 		gap: 10px;
 		padding: 30px;
+		max-width: calc(100% - 50px);
 	}
 
 	textarea {

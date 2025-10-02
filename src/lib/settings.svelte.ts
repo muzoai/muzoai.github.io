@@ -7,14 +7,14 @@ export interface Settings {
 export enum Theme {
 	Light = 'light',
 	Dark = 'dark',
-	Aero = 'aero',
+	// Aero = 'aero',
 	Nord = 'nord',
 	Catppuccin = 'catppuccin',
 	Everforest = 'everforest',
 }
 
 const DEFAULT: Settings = {
-	theme: Theme.Nord,
+	theme: Theme.Light,
 };
 
 let settings: Settings = $state(DEFAULT);
